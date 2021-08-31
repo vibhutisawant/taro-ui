@@ -311,8 +311,7 @@ case "$DISTRO" in
         sudo apt-get install -y wget tar make jq docker.io |& tee -a "$LOG_FILE"
         #sudo groupadd docker
         #sudo usermod -aG docker jenkins
-        systemctl daemon-reload && systemctl disable docker.service && systemctl enable docker.service
-        systemctl start docker
+        sudo dockerd &
         sudo docker login -u=lozdocker -p loz@docker
         #sudo chmod 666 /var/run/docker.sock
         configureAndInstall |& tee -a "$LOG_FILE"
