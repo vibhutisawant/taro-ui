@@ -93,7 +93,7 @@ function configureAndInstall() {
                  echo "Building deb for $DISTRO"
                  cd $CURDIR/go/src/github.com/docker/docker-ce-packaging/
                  make clean
-                 make REF=v$PACKAGE_VERSION VERSION=$PACKAGE_VERSION RASPBIAN_VERSIONS= UBUNTU_VERSIONS= DEBIAN_VERSIONS=ubuntu-$DISTRO deb
+                 sudo make REF=v$PACKAGE_VERSION VERSION=$PACKAGE_VERSION RASPBIAN_VERSIONS= UBUNTU_VERSIONS= DEBIAN_VERSIONS=ubuntu-$DISTRO deb
                  mkdir -p $CURDIR/${PACKAGE_NAME}-${PACKAGE_VERSION}-binaries/ubuntu-debs/ubuntu-$DISTRO
                  cp -rf $CURDIR/go/src/github.com/docker/docker-ce-packaging/deb/debbuild/ubuntu-$DISTRO/* $CURDIR/${PACKAGE_NAME}-${PACKAGE_VERSION}-binaries/ubuntu-debs/ubuntu-$DISTRO
 
@@ -311,7 +311,8 @@ case "$DISTRO" in
         sudo apt-get install -y wget tar make jq docker.io |& tee -a "$LOG_FILE"
         #sudo groupadd docker
         #sudo usermod -aG docker jenkins
-        sudo dockerd &
+        systemctl daemon-reload && systemctl disable docker.service && systemctl enable docker.service
+        systemctl start docker
         sudo docker login -u=lozdocker -p loz@docker
         #sudo chmod 666 /var/run/docker.sock
         configureAndInstall |& tee -a "$LOG_FILE"
