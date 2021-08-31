@@ -309,8 +309,8 @@ case "$DISTRO" in
         printf -- 'Installing the dependencies for Docker from repository \n' |& tee -a "$LOG_FILE"
         sudo apt-get update -y >/dev/null
         sudo apt-get install -y wget tar make jq docker.io |& tee -a "$LOG_FILE"
-        dockerd &
-        docker login -u=lozdocker -p loz@docker
+        sudo dockerd &
+        sudo docker login -u=lozdocker -p loz@docker
         #sudo chmod 666 /var/run/docker.sock
         configureAndInstall |& tee -a "$LOG_FILE"
         #uploadBinaries |& tee -a "$LOG_FILE"
