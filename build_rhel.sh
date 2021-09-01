@@ -10,8 +10,8 @@ set -e -o pipefail
 PACKAGE_NAME="docker"
 PACKAGE_VERSION="20.10.8"
 CONTAINERD_VERSION="1.4.9"
-DOCKER-CE_UPLOAD_PATH="docker-ce-20.10-8"
-CONTAINERD_UPLOAD_PATH="containerd-1.4-9"
+#DOCKER-CE_UPLOAD_PATH="docker-ce-20.10-8"
+#CONTAINERD_UPLOAD_PATH="containerd-1.4-9"
 PATCH_URL="https://raw.githubusercontent.com/vibhutisawant/taro-ui/next/patch/"
 #Git Token needed to download files from github.ibm.com
 GIT_TOKEN=""
