@@ -67,15 +67,15 @@ function configureAndInstall() {
         
         
         if [ -d ""$CURDIR"/go/src/github.com/docker/docker-ce-packaging" ]; then
-                    echo "Removing the dir."
-                    sudo rm -rf $CURDIR/go/src/github.com/docker/docker-ce-packaging
-                  else
-                    echo "$CURDIR/go/src/github.com/docker/docker-ce-packaging does not exist!"
-                  fi
-                 cd $CURDIR/go/src/github.com/docker
-                 git clone --depth 1 -b 20.10 https://github.com/docker/docker-ce-packaging
-                 cd docker-ce-packaging/
-                 make DOCKER_CLI_REF=v$PACKAGE_VERSION DOCKER_ENGINE_REF=v$PACKAGE_VERSION checkout
+           echo "Removing the dir."
+           sudo rm -rf $CURDIR/go/src/github.com/docker/docker-ce-packaging
+        else
+           echo "$CURDIR/go/src/github.com/docker/docker-ce-packaging does not exist!"
+        fi
+        cd $CURDIR/go/src/github.com/docker
+        git clone --depth 1 -b 20.10 https://github.com/docker/docker-ce-packaging
+        cd docker-ce-packaging/
+        make DOCKER_CLI_REF=v$PACKAGE_VERSION DOCKER_ENGINE_REF=v$PACKAGE_VERSION checkout
                       
         ## Build Containerd rhel-8 rpm binaries    
         mkdir -p $CURDIR/${PACKAGE_NAME}-${PACKAGE_VERSION}-binaries/containerd/rhel-8
