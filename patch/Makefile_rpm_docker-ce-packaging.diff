@@ -1,0 +1,21 @@
+diff --git a/rpm/Makefile b/rpm/Makefile
+index 77b4ddc..c39a6a3 100644
+--- a/rpm/Makefile
++++ b/rpm/Makefile
+@@ -37,6 +37,7 @@ RPMBUILD_FLAGS?=-ba\
+ 	--define '_scan_rpm_version $(word 1,$(GEN_SCAN_RPM_VER))' \
+ 	--define '_scan_version $(word 4,$(GEN_SCAN_RPM_VER))' \
+ 	--define '_scan_gitcommit $(SCAN_GITCOMMIT)' \
++	--define '_without_btrfs 1' \
+ 	$(RPMBUILD_EXTRA_FLAGS) \
+ 	$(SPECS)
+ 
+@@ -53,7 +54,7 @@ RUN?=docker run --rm \
+ FEDORA_RELEASES ?= fedora-34 fedora-33
+ CENTOS_RELEASES ?= centos-7 centos-8
+ ifeq ($(ARCH),s390x)
+-RHEL_RELEASES ?= rhel-7
++RHEL_RELEASES ?= rhel-8
+ else
+ RHEL_RELEASES ?=
+ endif

@@ -1,0 +1,24 @@
+diff --git a/dockerfiles/rpm.dockerfile b/dockerfiles/rpm.dockerfile
+index f6a030c..3362a89 100644
+--- a/dockerfiles/rpm.dockerfile
++++ b/dockerfiles/rpm.dockerfile
+@@ -15,8 +15,8 @@
+ #   See the License for the specific language governing permissions and
+ #   limitations under the License.
+ 
+-ARG BUILD_IMAGE=centos:7
+-ARG BASE=centos
++ARG BUILD_IMAGE=ecos0003:5000/jenkins_slave_rhel:8.4
++ARG BASE=rhel
+ ARG GOLANG_IMAGE=golang:latest
+ 
+ # Install golang from the official image, since the package managed
+@@ -30,7 +30,7 @@ ARG MD2MAN_VERSION=v2.0.0
+ RUN go get github.com/cpuguy83/go-md2man/v2/@${MD2MAN_VERSION}
+ 
+ FROM ${BUILD_IMAGE} AS redhat-base
+-RUN yum install -y yum-utils rpm-build git
++RUN source /home/test/.bashrc && yum install -y yum-utils rpm-build git
+ 
+ FROM redhat-base AS rhel-base
+ 
