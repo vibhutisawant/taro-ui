@@ -91,9 +91,11 @@ function configureAndInstall() {
         git clone https://github.com/docker/containerd-packaging
         cd containerd-packaging
         mkdir -p $CURDIR/${PACKAGE_NAME}-${PACKAGE_VERSION}-binaries/containerd/
-
+        
         ## Build Containerd SLES 15-SP3 rpm binaries    
         mkdir -p $CURDIR/${PACKAGE_NAME}-${PACKAGE_VERSION}-binaries/containerd/sles-15
+        curl -o Makefile_containerd-packaging.diff $PATCH_URL/Makefile_containerd-packaging.diff
+        patch --ignore-whitespace Makefile Makefile_containerd-packaging.diff
 	      make REF=v$CONTAINERD_VERSION BUILD_IMAGE=ecos0003:5000/jenkins_slave_sles:15-sp3
         cp build/sles/15/s390x/*.rpm $CURDIR/${PACKAGE_NAME}-${PACKAGE_VERSION}-binaries/containerd/sles-15/
             
