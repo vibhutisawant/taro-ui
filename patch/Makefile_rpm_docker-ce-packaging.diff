@@ -1,0 +1,19 @@
+--- Makefile    2021-06-16 10:15:32.559626090 +0000
++++ Makefile    2021-06-08 14:10:19.958924328 +0000
+@@ -37,6 +37,7 @@
+        --define '_scan_rpm_version $(word 1,$(GEN_SCAN_RPM_VER))' \
+        --define '_scan_version $(word 4,$(GEN_SCAN_RPM_VER))' \
+        --define '_scan_gitcommit $(SCAN_GITCOMMIT)' \
++       --define '_without_btrfs 1' \
+        $(RPMBUILD_EXTRA_FLAGS) \
+        $(SPECS)
+
+@@ -53,7 +54,7 @@
+ FEDORA_RELEASES ?= fedora-34 fedora-33 fedora-32
+ CENTOS_RELEASES ?= centos-7 centos-8
+ ifeq ($(ARCH),s390x)
+-RHEL_RELEASES ?= rhel-7
++RHEL_RELEASES ?= rhel-8
+ else
+ RHEL_RELEASES ?=
+ endif

@@ -1,0 +1,17 @@
+--- a/rpm/SPECS/docker-ce.spec
++++ b/rpm/SPECS/docker-ce.spec
+@@ -20,11 +20,11 @@ Packager: Docker <support@docker.com>
+ Requires: /usr/sbin/groupadd
+ Requires: docker-ce-cli
+ Requires: docker-ce-rootless-extras
+-Requires: container-selinux >= 2:2.74
+-Requires: libseccomp >= 2.3
++Requires: container-selinux
++Requires: libseccomp2
+ Requires: systemd
+ Requires: iptables
+-Requires: libcgroup
++Requires: libcgroup-devel
+ Requires: containerd.io >= 1.4.1
+ Requires: tar
+ Requires: xz
