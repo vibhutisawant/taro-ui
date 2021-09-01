@@ -86,20 +86,20 @@ function configureAndInstall() {
         
         ## Build Containerd rhel-8 rpm binaries    
         mkdir -p $CURDIR/${PACKAGE_NAME}-${PACKAGE_VERSION}-binaries/containerd/rhel-8
-        curl -o Makefile_containerd.diff https://$GIT_TOKEN@raw.github.ibm.com/loz/opensource-porting-s390x/master/Docker-CE/scripts/${PACKAGE_VERSION}/patch/Makefile_containerd.diff
+        curl -o Makefile_containerd.diff $PATCH_URL/Makefile_containerd.diff
         patch --ignore-whitespace Makefile Makefile_containerd.diff
-        curl -o Dockerfile.rpm.diff https://$GIT_TOKEN@raw.github.ibm.com/loz/opensource-porting-s390x/master/Docker-CE/scripts/${PACKAGE_VERSION}/patch/Dockerfile.rpm.diff
+        curl -o Dockerfile.rpm.diff $PATCH_URL/Dockerfile.rpm.diff
         patch --ignore-whitespace dockerfiles/rpm.dockerfile Dockerfile.rpm.diff
         make REF=v$CONTAINERD_VERSION BUILD_IMAGE=ecos0003:5000/jenkins_slave_rhel:8.4
         cp build/rhel/8/s390x/*.rpm $CURDIR/${PACKAGE_NAME}-${PACKAGE_VERSION}-binaries/containerd/rhel-8/
         
         #Building Rhel 8 Docker-ce Binaries
         cd $CURDIR/go/src/github.com/docker/docker-ce-packaging/rpm
-        curl -o Makefile_rpm_docker-ce-packaging.diff https://$GIT_TOKEN@raw.github.ibm.com/loz/opensource-porting-s390x/master/Docker-CE/scripts/${PACKAGE_VERSION}/patch/Makefile_rpm_docker-ce-packaging.diff
+        curl -o Makefile_rpm_docker-ce-packaging.diff $PATCH_URL/Makefile_rpm_docker-ce-packaging.diff
         patch --ignore-whitespace Makefile Makefile_rpm_docker-ce-packaging.diff
         mkdir -p rhel-8
         cd $CURDIR/go/src/github.com/docker/docker-ce-packaging/rpm/rhel-8
-        curl -o Dockerfile https://$GIT_TOKEN@raw.github.ibm.com/loz/opensource-porting-s390x/master/Docker-CE/scripts/${PACKAGE_VERSION}/Dockerfile-rhel-8
+        curl -o Dockerfile $PATCH_URL/Dockerfile-rhel-8
         cd $CURDIR/go/src/github.com/docker/docker-ce-packaging
         make -C rpm VERSION=$PACKAGE_VERSION rpmbuild/bundles-ce-rhel-8-s390x.tar.gz
         cp rpm/rpmbuild/bundles-ce-rhel-8-s390x.tar.gz $CURDIR/${PACKAGE_NAME}-${PACKAGE_VERSION}-binaries-tar/
