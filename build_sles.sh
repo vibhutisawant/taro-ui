@@ -109,9 +109,8 @@ function configureAndInstall() {
 	      mkdir -p $CURDIR/go/src/github.com/docker/docker-ce-packaging/rpm/sles-15
 	
         #Update docker-ce-packaging
-        curl -o Makefile_rpm_sles_docker-ce-packaging.diff https://$TOKEN@raw.github.ibm.com/loz/opensource-porting-s390x/master/Docker-CE/scripts/${PACKAGE_VERSION}/Makefile_rpm_sles_docker-ce-packaging.diff
+        curl -o Makefile_rpm_sles_docker-ce-packaging.diff https://$TOKEN@raw.github.ibm.com/loz/opensource-porting-s390x/master/Docker-CE/scripts/${PACKAGE_VERSION}/patch/Makefile_rpm_sles_docker-ce-packaging.diff
         patch --ignore-whitespace Makefile Makefile_rpm_sles_docker-ce-packaging.diff
-        
 	#Update docker-ce.spec
         cd $CURDIR/go/src/github.com/docker/docker-ce-packaging/rpm/SPECS
         curl -o docker-ce_spec_sles15.diff  $PATCH_URL/docker-ce_spec_sles15.diff
