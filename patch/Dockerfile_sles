@@ -1,7 +1,7 @@
 ARG GO_IMAGE
 ARG DISTRO=sles
 ARG SUITE=15
-ARG BUILD_IMAGE=dockereng/${DISTRO}:${SUITE}-s390x
+ARG BUILD_IMAGE=registry.suse.com/suse/sle15:15.3
 
 FROM ${GO_IMAGE} AS golang
 
@@ -21,7 +21,7 @@ ENV CC=gcc
 USER root
 
 
-RUN zypper install -y rpm-build rpmlint pkg-config libsystemd0 systemd-devel selinux-tools wget cmake device-mapper-devel git glibc-devel-static libseccomp-devel libtool libarchive-devel  btrfsprogs libbtrfs-devel
+RUN zypper ar ftp://aborkar:ab04ka4123@ftp3install.linux.ibm.com/suse/scc/Updates/SLE-Module-Basesystem/15-SP3/s390x/update Basesystem-Modules-Update_15-SP3 && zypper ar ftp://aborkar:ab04ka4123@ftp3install.linux.ibm.com/suse/scc/Products/SLE-Module-Basesystem/15-SP3/s390x/product/ SLE-Module-Basesystem-Product-15-SP3 && zypper ar ftp://aborkar:ab04ka4123@ftp3install.linux.ibm.com/suse/scc/Products/SLE-Module-Containers/15-SP3/s390x/product/  SLE-Module-Containers-Product-15-SP3 && zypper ar ftp://aborkar:ab04ka4123@ftp3install.linux.ibm.com/suse/scc/Products/SLE-Module-Legacy/15-SP3/s390x/product/ SLE-Module-Legacy-15-SP3-product && zypper ar ftp://aborkar:ab04ka4123@ftp3install.linux.ibm.com/suse/scc/Products/SLE-Module-Development-Tools/15-SP3/s390x/product/  SLE-Module-Development-Tools-15-SP3-product && zypper ar ftp://aborkar:ab04ka4123@ftp3install.linux.ibm.com/suse/scc/Updates/SLE-Module-Development-Tools/15-SP3/s390x/update/  SLE-Module-Development-Tools-15-SP3-update && zypper ar ftp://aborkar:ab04ka4123@ftp3install.linux.ibm.com/suse/scc/Products/SLE-Module-Python2/15-SP3/s390x/product/  SLE-Module-Python2-15-SP3-product && zypper ar -G ftp://aborkar:ab04ka4123@ftp3install.linux.ibm.com/suse/scc/Backports/SLE-15-SP3_s390x/standard/  Backports-SLE-15-SP3_s390x-standard && zypper ar ftp://aborkar:ab04ka4123@ftp3install.linux.ibm.com/suse/scc/Updates/SLE-Module-Python2/15-SP3/s390x/update/  SLE-Module-Python2-15-SP3-update && zypper ref -s && zypper install -y rpm-build rpmlint pkg-config libsystemd0 systemd-devel selinux-tools wget cmake device-mapper-devel git glibc-devel-static libseccomp-devel libtool libarchive-devel  btrfsprogs libbtrfs-devel
 
 COPY SPECS /usr/src/packages/SPECS
 COPY rpmbuild/SOURCES/ /usr/src/packages/SOURCES/
