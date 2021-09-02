@@ -109,7 +109,7 @@ function configureAndInstall() {
 	      mkdir -p $CURDIR/go/src/github.com/docker/docker-ce-packaging/rpm/sles-15
 	
         #Update docker-ce-packaging
-        curl -o Makefile_rpm_sles_docker-ce-packaging.diff $PATCH_URL/Makefile_rpm_sles_docker-ce-packaging.diff
+        curl -o Makefile_rpm_sles_docker-ce-packaging.diff https://$TOKEN@raw.github.ibm.com/loz/opensource-porting-s390x/master/Docker-CE/scripts/${PACKAGE_VERSION}/Makefile_rpm_sles_docker-ce-packaging.diff
         patch --ignore-whitespace Makefile Makefile_rpm_sles_docker-ce-packaging.diff
         
 	#Update docker-ce.spec
@@ -118,14 +118,14 @@ function configureAndInstall() {
         patch --ignore-whitespace docker-ce.spec docker-ce_spec_sles15.diff
 	
         #Create checkpolicy.spec & policycoreutils.spec
-	cd $CURDIR/go/src/github.com/docker/docker-ce-packaging/rpm/sles-15
+	      cd $CURDIR/go/src/github.com/docker/docker-ce-packaging/rpm/sles-15
         curl -o checkpolicy.spec https://$TOKEN@raw.github.ibm.com/loz/opensource-porting-s390x/master/Docker-CE/scripts/${PACKAGE_VERSION}/checkpolicy.spec
         curl -o policycoreutils.spec https://$TOKEN@raw.github.ibm.com/loz/opensource-porting-s390x/master/Docker-CE/scripts/${PACKAGE_VERSION}/policycoreutils.spec
         
 	
 	#Create SLES Dockerfile
         curl -o Dockerfile https://$TOKEN@raw.github.ibm.com/loz/opensource-porting-s390x/master/Docker-CE/scripts/${PACKAGE_VERSION}/Dockerfile_sles
-        cd $CURDIR/go/src/github.com/docker/docker-ce-packaging
+        cd $CURDIR/go/src/github.com/docker/docker-ce-packaging/rpm
 	
 	#Build
         make VERSION=${PACKAGE_VERSION} sles-15 rpmbuild/bundles-ce-sles-15-s390x.tar.gz
