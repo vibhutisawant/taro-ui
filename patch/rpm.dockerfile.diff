@@ -1,5 +1,5 @@
 diff --git a/dockerfiles/rpm.dockerfile b/dockerfiles/rpm.dockerfile
-index f6a030c..ab5dac3 100644
+index f6a030c..fc92328 100644
 --- a/dockerfiles/rpm.dockerfile
 +++ b/dockerfiles/rpm.dockerfile
 @@ -53,7 +53,7 @@ RUN dnf install -y rpm-build git dnf-plugins-core
@@ -7,7 +7,7 @@ index f6a030c..ab5dac3 100644
  # On older versions of Docker the path may not be explicitly set
  # opensuse also does not set a default path in their docker images
 -RUN zypper -n install rpm-build git
-+RUN zypper ref -s && zypper -n install rpm-build git
++RUN zypper ar ftp://aborkar:ab04ka4123@ftp3install.linux.ibm.com/suse/scc/Updates/SLE-Module-Basesystem/15-SP3/s390x/update Basesystem-Modules-Update_15-SP3 && zypper ar ftp://aborkar:ab04ka4123@ftp3install.linux.ibm.com/suse/scc/Products/SLE-Module-Basesystem/15-SP3/s390x/product/ SLE-Module-Basesystem-Product-15-SP3 && zypper ar ftp://aborkar:ab04ka4123@ftp3install.linux.ibm.com/suse/scc/Products/SLE-Module-Containers/15-SP3/s390x/product/  SLE-Module-Containers-Product-15-SP3 && zypper ar ftp://aborkar:ab04ka4123@ftp3install.linux.ibm.com/suse/scc/Products/SLE-Module-Legacy/15-SP3/s390x/product/ SLE-Module-Legacy-15-SP3-product && zypper ref -s && zypper -n install rpm-build git
  ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${PATH}
  RUN echo "%_topdir    /root/rpmbuild" > /root/.rpmmacros
  
