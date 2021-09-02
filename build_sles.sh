@@ -96,7 +96,12 @@ function configureAndInstall() {
         mkdir -p $CURDIR/${PACKAGE_NAME}-${PACKAGE_VERSION}-binaries/containerd/sles-15
         curl -o Makefile_containerd-packaging.diff $PATCH_URL/Makefile_containerd-packaging.diff
         patch --ignore-whitespace Makefile Makefile_containerd-packaging.diff
-	      make REF=v$CONTAINERD_VERSION BUILD_IMAGE=ecos0003:5000/jenkins_slave_sles:15-sp3
+        
+        #fix sles 15sp3 image
+        curl -o  rpm.dockerfile.diff $PATCH_URL/rpm.dockerfile.diff
+        patch --ignore-whitespace dockerfiles/rpm.dockerfile rpm.dockerfile.diff
+        
+	      make REF=v$CONTAINERD_VERSION BUILD_IMAGE=registry.suse.com/suse/sle15:15.3
         cp build/sles/15/s390x/*.rpm $CURDIR/${PACKAGE_NAME}-${PACKAGE_VERSION}-binaries/containerd/sles-15/
             
         #Building SLES 15-SP2 Docker-ce Binaries
