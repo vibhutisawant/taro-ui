@@ -123,7 +123,7 @@ function configureAndInstall() {
         cd $CURDIR/go/src/github.com/docker/docker-ce-packaging
 	
 	#Build
-        make VERSION=${PACKAGE_VERSION} sles rpmbuild/bundles-ce-sles-15-s390x.tar.gz
+        make VERSION=${PACKAGE_VERSION} sles-15 rpmbuild/bundles-ce-sles-15-s390x.tar.gz
         cp rpmbuild/bundles-ce-sles-15-s390x.tar.gz $CURDIR/${PACKAGE_NAME}-${PACKAGE_VERSION}-binaries-tar/
 }
 
