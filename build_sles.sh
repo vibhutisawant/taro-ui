@@ -117,7 +117,7 @@ function configureAndInstall() {
         patch --ignore-whitespace docker-ce.spec docker-ce_spec_sles15.diff
 	
         #Create checkpolicy.spec & policycoreutils.spec
-	      cd $CURDIR/go/src/github.com/docker/docker-ce-packaging/rpm/sles-15
+	      cd $CURDIR/go/src/github.com/docker/docker-ce-packaging/rpm/SPECS
         curl -o checkpolicy.spec https://$TOKEN@raw.github.ibm.com/loz/opensource-porting-s390x/master/Docker-CE/scripts/${PACKAGE_VERSION}/checkpolicy.spec
         curl -o policycoreutils.spec https://$TOKEN@raw.github.ibm.com/loz/opensource-porting-s390x/master/Docker-CE/scripts/${PACKAGE_VERSION}/policycoreutils.spec
         
