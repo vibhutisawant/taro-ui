@@ -123,7 +123,7 @@ function configureAndInstall() {
         
 	
 	#Create SLES Dockerfile
-        curl -o Dockerfile $PATCH_URL/Dockerfile_sles
+        curl -o ../sles-15/Dockerfile $PATCH_URL/Dockerfile_sles
         cd $CURDIR/go/src/github.com/docker/docker-ce-packaging/rpm
 	
 	#Build
