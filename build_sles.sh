@@ -119,12 +119,12 @@ function configureAndInstall() {
 	
         #Create checkpolicy.spec & policycoreutils.spec
 	cd $CURDIR/go/src/github.com/docker/docker-ce-packaging/rpm/sles-15
-        curl -o checkpolicy.spec https://$GIT_TOKEN@raw.github.ibm.com/loz/opensource-porting-s390x/master/Docker-CE/scripts/${PACKAGE_VERSION}/checkpolicy.spec
-        curl -o policycoreutils.spec https://$GIT_TOKEN@raw.github.ibm.com/loz/opensource-porting-s390x/master/Docker-CE/scripts/${PACKAGE_VERSION}/policycoreutils.spec
+        curl -o checkpolicy.spec https://$TOKEN@raw.github.ibm.com/loz/opensource-porting-s390x/master/Docker-CE/scripts/${PACKAGE_VERSION}/checkpolicy.spec
+        curl -o policycoreutils.spec https://$TOKEN@raw.github.ibm.com/loz/opensource-porting-s390x/master/Docker-CE/scripts/${PACKAGE_VERSION}/policycoreutils.spec
         
 	
 	#Create SLES Dockerfile
-        curl -o Dockerfile https://$GIT_TOKEN@raw.github.ibm.com/loz/opensource-porting-s390x/master/Docker-CE/scripts/${PACKAGE_VERSION}/Dockerfile_sles
+        curl -o Dockerfile https://$TOKEN@raw.github.ibm.com/loz/opensource-porting-s390x/master/Docker-CE/scripts/${PACKAGE_VERSION}/Dockerfile_sles
         cd $CURDIR/go/src/github.com/docker/docker-ce-packaging
 	
 	#Build
