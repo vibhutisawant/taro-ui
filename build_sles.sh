@@ -186,8 +186,8 @@ case "$DISTRO" in
         sudo apt-get install -y wget tar make jq docker.io |& tee -a "$LOG_FILE"
         sudo chmod 666 /var/run/docker.sock
         configureAndInstall |& tee -a "$LOG_FILE"
-        uploadBinaries |& tee -a "$LOG_FILE"
-        verifyBinaries |& tee -a "$LOG_FILE"
+        #uploadBinaries |& tee -a "$LOG_FILE"
+        #verifyBinaries |& tee -a "$LOG_FILE"
         ;;
 *)
         printf -- "%s not supported \n" "$DISTRO" |& tee -a "$LOG_FILE"
