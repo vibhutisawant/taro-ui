@@ -1,0 +1,13 @@
+diff --git a/dockerfiles/rpm.dockerfile b/dockerfiles/rpm.dockerfile
+index f6a030c..53215b9 100644
+--- a/dockerfiles/rpm.dockerfile
++++ b/dockerfiles/rpm.dockerfile
+@@ -30,7 +30,7 @@ ARG MD2MAN_VERSION=v2.0.0
+ RUN go get github.com/cpuguy83/go-md2man/v2/@${MD2MAN_VERSION}
+ 
+ FROM ${BUILD_IMAGE} AS redhat-base
+-RUN yum install -y yum-utils rpm-build git
++RUN source /root/.bashrc && yum install -y yum-utils rpm-build git
+ 
+ FROM redhat-base AS rhel-base
+ 
