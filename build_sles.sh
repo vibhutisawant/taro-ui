@@ -94,7 +94,7 @@ function configureAndInstall() {
         
         ## Build Containerd SLES 15-SP3 rpm binaries    
         mkdir -p $CURDIR/${PACKAGE_NAME}-${PACKAGE_VERSION}-binaries/containerd/sles-15
-        curl -o Makefile_containerd-packaging.diff $PATCH_URL/Makefile_containerd-packaging.diff
+        curl -o Makefile_containerd-packaging.diff $PATCH_URL/new.diff
         patch --ignore-whitespace Makefile Makefile_containerd-packaging.diff
         
         #fix sles 15sp3 image
