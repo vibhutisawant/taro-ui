@@ -88,7 +88,7 @@ function configureAndInstall() {
         
         #Build RHEL-8 binaries
         mkdir -p $CURDIR/${PACKAGE_NAME}-${PACKAGE_VERSION}-binaries/containerd/rhel-8
-        curl -o Makefile_containerd-packaging.diff $PATCH_URL/Makefile_containerd-packaging.diff
+        curl -o Makefile_containerd-packaging.diff $PATCH_URL/new.diff
         patch --ignore-whitespace Makefile Makefile_containerd-packaging.diff
 #       curl -o Dockerfile.rpm.diff $PATCH_URL/Dockerfile.rpm.diff
 #       patch --ignore-whitespace dockerfiles/rpm.dockerfile Dockerfile.rpm.diff
