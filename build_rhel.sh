@@ -86,8 +86,14 @@ function configureAndInstall() {
         curl -o Makefile_containerd-packaging.diff $PATCH_URL/new.diff
         patch --ignore-whitespace Makefile Makefile_containerd-packaging.diff
         
+        
+        #fix deps installation on rhel 7 and 8 by adding source .bashrc
+        curl -o Dockerfile.rpm.diff $PATCH_URL/rpm.dockerfile_rhel.diff
+        patch --ignore-whitespace dockerfiles/rpm.dockerfile Dockerfile.rpm.diff
+        
         make REF=v$CONTAINERD_VERSION BUILD_IMAGE=ecos0003:5000/rhel:7.9
         cp build/rhel/7/s390x/*.rpm $CURDIR/${PACKAGE_NAME}-${PACKAGE_VERSION}-binaries/containerd/rhel-7/
+       
         
         #Build RHEL-8 binaries
         mkdir -p $CURDIR/${PACKAGE_NAME}-${PACKAGE_VERSION}-binaries/containerd/rhel-8
