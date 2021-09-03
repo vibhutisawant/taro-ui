@@ -1,7 +1,7 @@
 ARG GO_IMAGE
 ARG DISTRO=sles
 ARG SUITE=15
-ARG BUILD_IMAGE=registry.suse.com/suse/sle15:15.3
+ARG BUILD_IMAGE=ecos0003:5000/jenkins_slave_sles:15-sp3
 
 FROM ${GO_IMAGE} AS golang
 
