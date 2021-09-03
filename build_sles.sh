@@ -98,8 +98,8 @@ function configureAndInstall() {
         patch --ignore-whitespace Makefile Makefile_containerd-packaging.diff
         
         #fix sles 15sp3 image
-        curl -o  rpm.dockerfile.diff $PATCH_URL/rpm.dockerfile.diff
-        patch --ignore-whitespace dockerfiles/rpm.dockerfile rpm.dockerfile.diff
+        #curl -o  rpm.dockerfile.diff $PATCH_URL/rpm.dockerfile.diff
+        #patch --ignore-whitespace dockerfiles/rpm.dockerfile rpm.dockerfile.diff
         
 	      make REF=v$CONTAINERD_VERSION BUILD_IMAGE=ecos0003:5000/jenkins_slave_sles:15-sp3
         cp build/sles/15/s390x/*.rpm $CURDIR/${PACKAGE_NAME}-${PACKAGE_VERSION}-binaries/containerd/sles-15/
@@ -118,8 +118,8 @@ function configureAndInstall() {
 	
         #Create checkpolicy.spec & policycoreutils.spec
 	      cd $CURDIR/go/src/github.com/docker/docker-ce-packaging/rpm/SPECS
-        curl -o checkpolicy.spec https://$TOKEN@raw.github.ibm.com/loz/opensource-porting-s390x/master/Docker-CE/scripts/${PACKAGE_VERSION}/checkpolicy.spec
-        curl -o policycoreutils.spec https://$TOKEN@raw.github.ibm.com/loz/opensource-porting-s390x/master/Docker-CE/scripts/${PACKAGE_VERSION}/policycoreutils.spec
+        curl -o checkpolicy.spec $PATCH_URL/checkpolicy.spec
+        curl -o policycoreutils.spec $PATCH_URL/policycoreutils.spec
         
 	
 	#Create SLES Dockerfile
