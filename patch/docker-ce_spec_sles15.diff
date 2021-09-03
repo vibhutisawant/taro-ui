@@ -15,3 +15,92 @@
  Requires: containerd.io >= 1.4.1
  Requires: tar
  Requires: xz
+diff --git a/rpm/SPECS/docker-ce.spec b/rpm/SPECS/docker-ce.spec
+index 64ea11f..b1f8c07 100644
+--- a/rpm/SPECS/docker-ce.spec
++++ b/rpm/SPECS/docker-ce.spec
+@@ -8,8 +8,6 @@ Version: %{_version}
+ Release: %{_release}%{?dist}
+ Epoch: 3
+ Source0: engine.tgz
+-Source1: docker.service
+-Source2: docker.socket
+ Summary: The open-source application container engine
+ Group: Tools/Docker
+ License: ASL 2.0
+@@ -20,24 +18,38 @@ Packager: Docker <support@docker.com>
+ Requires: /usr/sbin/groupadd
+ Requires: docker-ce-cli
+ Requires: docker-ce-rootless-extras
++%if 0%{?suse_version}
++Requires: container-selinux
++Requires: libseccomp2
++Requires: libcgroup-devel
++%else
+ Requires: container-selinux >= 2:2.74
+ Requires: libseccomp >= 2.3
++Requires: libcgroup
++%endif
+ Requires: systemd
+ Requires: iptables
+-Requires: libcgroup
+ Requires: containerd.io >= 1.4.1
+ Requires: tar
+ Requires: xz
+ 
+ BuildRequires: bash
++%if 0%{?suse_version}
++BuildRequires: btrfsprogs
++%else
+ %{?_with_btrfs:BuildRequires: btrfs-progs-devel}
++%endif
+ BuildRequires: ca-certificates
+ BuildRequires: cmake
+ BuildRequires: device-mapper-devel
+ BuildRequires: gcc
+ BuildRequires: git
+ BuildRequires: glibc-static
++%if 0%{?suse_version}
++BuildRequires: libarchive13
++%else
+ BuildRequires: libarchive
++%endif
+ BuildRequires: libseccomp-devel
+ BuildRequires: libselinux-devel
+ BuildRequires: libtool
+@@ -82,28 +94,22 @@ mkdir -p /go/src/github.com/docker
+ ln -s ${RPM_BUILD_DIR}/src/engine /go/src/github.com/docker/docker
+ 
+ pushd ${RPM_BUILD_DIR}/src/engine
+-for component in tini "proxy dynamic";do
+-    TMP_GOPATH="/go" hack/dockerfile/install/install.sh $component
+-done
++TMP_GOPATH="/go" hack/dockerfile/install/install.sh tini
+ VERSION=%{_origversion} PRODUCT=docker hack/make.sh dynbinary
+ popd
+ 
+ %check
+-engine/bundles/dynbinary-daemon/dockerd -v
++ver="$(engine/bundles/dynbinary-daemon/dockerd --version)"; \
++    test "$ver" = "Docker version %{_origversion}, build %{_gitcommit_engine}" && echo "PASS: daemon version OK" || (echo "FAIL: daemon version ($ver) did not match" && exit 1)
+ 
+ %install
+-# install daemon binary
+ install -D -p -m 0755 $(readlink -f engine/bundles/dynbinary-daemon/dockerd) ${RPM_BUILD_ROOT}%{_bindir}/dockerd
+-
+-# install proxy
+-install -D -p -m 0755 /usr/local/bin/docker-proxy ${RPM_BUILD_ROOT}%{_bindir}/docker-proxy
+-
+-# install tini
+-install -D -p -m 755 /usr/local/bin/docker-init ${RPM_BUILD_ROOT}%{_bindir}/docker-init
++install -D -p -m 0755 $(readlink -f engine/bundles/dynbinary-daemon/docker-proxy) ${RPM_BUILD_ROOT}%{_bindir}/docker-proxy
++install -D -p -m 0755 /usr/local/bin/docker-init ${RPM_BUILD_ROOT}%{_bindir}/docker-init
+ 
+ # install systemd scripts
+-install -D -m 0644 ${RPM_SOURCE_DIR}/docker.service ${RPM_BUILD_ROOT}%{_unitdir}/docker.service
+-install -D -m 0644 ${RPM_SOURCE_DIR}/docker.socket ${RPM_BUILD_ROOT}%{_unitdir}/docker.socket
++install -D -m 0644 engine/contrib/init/systemd/docker.service ${RPM_BUILD_ROOT}%{_unitdir}/docker.service
++install -D -m 0644 engine/contrib/init/systemd/docker.socket ${RPM_BUILD_ROOT}%{_unitdir}/docker.socket
+ 
+ %files
+ %{_bindir}/dockerd
