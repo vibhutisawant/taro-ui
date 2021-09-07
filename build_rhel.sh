@@ -73,6 +73,10 @@ function configureAndInstall() {
         cd $CURDIR/go/src/github.com/docker
         git clone --depth 1 -b 20.10 https://github.com/docker/docker-ce-packaging
         cd docker-ce-packaging/
+                
+        #patch to chnge base image in Dockerfile
+        curl -o Dockerfile_rhel7.diff $PATCH_URL/Dockerfile_rhel7.diff
+        patch --ignore-whitespace rpm/rhel-7/Dockerfile Makefile_rpm_docker-ce-packaging.diff
         make DOCKER_CLI_REF=v$PACKAGE_VERSION DOCKER_ENGINE_REF=v$PACKAGE_VERSION checkout
         
         ## Build Containerd
