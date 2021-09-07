@@ -76,7 +76,7 @@ function configureAndInstall() {
                 
         #patch to chnge base image in Dockerfile
         curl -o Dockerfile_rhel7.diff $PATCH_URL/Dockerfile_rhel7.diff
-        patch --ignore-whitespace rpm/rhel-7/Dockerfile Makefile_rpm_docker-ce-packaging.diff
+        patch --ignore-whitespace rpm/rhel-7/Dockerfile Dockerfile_rhel7.diff 
         make DOCKER_CLI_REF=v$PACKAGE_VERSION DOCKER_ENGINE_REF=v$PACKAGE_VERSION checkout
         
         ## Build Containerd
