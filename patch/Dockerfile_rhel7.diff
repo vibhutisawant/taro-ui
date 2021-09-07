@@ -1,0 +1,13 @@
+diff --git a/rpm/rhel-7/Dockerfile b/rpm/rhel-7/Dockerfile
+index cb1ab19..06640f3 100644
+--- a/rpm/rhel-7/Dockerfile
++++ b/rpm/rhel-7/Dockerfile
+@@ -1,7 +1,7 @@
+ ARG GO_IMAGE
+ ARG DISTRO=rhel
+ ARG SUITE=7
+-ARG BUILD_IMAGE=dockereng/${DISTRO}:${SUITE}-s390x
++ARG BUILD_IMAGE=ecos0003:5000/rhel:7.9
+ 
+ FROM ${GO_IMAGE} AS golang
+ 
